@@ -4,37 +4,33 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Balushi Family – Dashboard</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap" rel="stylesheet">
 <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
 <style>
   *{box-sizing:border-box;margin:0;padding:0}
-  body{font-family:'Poppins',sans-serif;background:#fff;color:#1f1f1f;padding:20px 22px}
-  h2.sec{font-size:21px;font-weight:500;margin:4px 0 20px}
-  .tiles{display:grid;grid-template-columns:repeat(4,1fr);gap:20px;padding-bottom:22px;border-bottom:1px solid #eee;margin-bottom:22px}
-  .tile{border:1px solid #ececec;border-radius:12px;padding:14px 16px;display:flex;justify-content:space-between;align-items:center}
-  .tile .l{font-size:19px;color:#222}
-  .tile .v{font-size:19px;color:#333;margin-top:6px}
-  .ic{width:44px;height:44px;border-radius:50%;display:flex;align-items:center;justify-content:center}
-  .ic.p{background:#fde7ec}.ic.b{background:#e3f0fb}
-  .members{display:grid;grid-template-columns:repeat(4,1fr);gap:20px;padding-bottom:22px;border-bottom:1px solid #eee;margin-bottom:22px}
-  .m{border:1px solid #ececec;border-radius:12px;padding:12px 14px;display:flex;align-items:center;gap:12px}
-  .av{width:42px;height:42px;border-radius:50%;color:#fff;font-weight:600;font-size:14px;display:flex;align-items:center;justify-content:center;flex-shrink:0}
-  .m .n{font-size:14px;font-weight:500}
-  .m .r{font-size:12px;color:#777}
-  .m .a{margin-left:auto;text-align:right;font-size:12px;color:#777}
-  .m .a b{display:block;font-size:14px;color:#222;font-weight:500}
-  .grid{display:grid;grid-template-columns:1fr 1fr;gap:22px;margin-bottom:22px}
-  .card{border:1px solid #ececec;border-radius:14px;padding:18px 20px}
-  .card h3{font-size:20px;font-weight:500;margin-bottom:4px}
-  .card .s{font-size:14px;color:#666}
-  .box{height:340px;position:relative;margin-top:8px}
-  .full .box{height:300px}
+  html,body{font-family:'Poppins',sans-serif;font-size:13px;color:#1f1f1f;background:#fff;-webkit-font-smoothing:antialiased}
+  body{padding:16px 20px}
+  .members{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;padding-bottom:16px;border-bottom:1px solid #eee;margin-bottom:16px}
+  .m{border:1px solid #ececec;border-radius:10px;padding:10px 12px;display:flex;align-items:center;gap:10px}
+  .av{width:36px;height:36px;border-radius:50%;color:#fff;font-weight:500;font-size:12px;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+  .m .n{font-size:13px;font-weight:500;color:#222}
+  .m .r{font-size:11px;color:#777;margin-top:1px}
+  .m .a{margin-left:auto;text-align:right;font-size:11px;color:#777}
+  .m .a b{display:block;font-size:13px;color:#222;font-weight:500;margin-top:1px}
+  .grid{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:16px}
+  .card{border:1px solid #ececec;border-radius:12px;padding:14px 16px}
+  .card h3{font-size:15px;font-weight:500;color:#222}
+  .card .s{font-size:12px;color:#777;margin-top:2px}
+  .box{height:280px;position:relative;margin-top:10px}
+  .full .box{height:240px}
 </style>
 </head>
 <body>
 
 <div class="members">
-  <div class="m"><div class="av" style="background:#e8336c">AB</div><div><div class="n">Ahmed Al Balushi</div><div class="r">Head of Family</div></div><div class="a">AUM<b>OMR 712K</b></div></div>
+  <div class="m"><div class="av" style="background:#e8406f">AB</div><div><div class="n">Ahmed Al Balushi</div><div class="r">Head of Family</div></div><div class="a">AUM<b>OMR 712K</b></div></div>
   <div class="m"><div class="av" style="background:#6a3fc8">MB</div><div><div class="n">Mariam Al Balushi</div><div class="r">Spouse</div></div><div class="a">AUM<b>OMR 386K</b></div></div>
   <div class="m"><div class="av" style="background:#f7b21c">FB</div><div><div class="n">Fatma Al Balushi</div><div class="r">Daughter</div></div><div class="a">AUM<b>OMR 24.5K</b></div></div>
   <div class="m"><div class="av" style="background:#3cbfd4">SB</div><div><div class="n">Salim Al Balushi</div><div class="r">Son</div></div><div class="a">AUM<b>OMR 122.5K</b></div></div>
@@ -51,35 +47,48 @@
 
 <script>
 const YL='#f9c124', PK='#e8406f', CY='#3cbfd4', PU='#6a3fc8', BL='#1e6fd9', OR='#f7822a', LY='#fdd25a';
-Chart.defaults.font.family='Poppins'; Chart.defaults.font.size=12; Chart.defaults.color='#333';
-const legend={position:'bottom',labels:{usePointStyle:true,pointStyle:'circle',boxWidth:7,padding:22}};
-const grid={color:'#e6e6e6'};
 
-new Chart(c1,{type:'pie',data:{labels:['Term Deposits','Savings / Current','Mortgage Loan','Personal Loan','Credit Cards'],
- datasets:[{data:[38,26,18,11,7],backgroundColor:[YL,CY,PK,PU,OR],borderWidth:0}]},
- options:{maintainAspectRatio:false,layout:{padding:10},plugins:{legend,tooltip:{callbacks:{label:c=>` ${c.label}: ${c.raw}%`}}}}});
+function draw(){
+  Chart.defaults.font.family="'Poppins', sans-serif";
+  Chart.defaults.font.size=11;
+  Chart.defaults.color='#555';
+  const legend={position:'bottom',labels:{usePointStyle:true,pointStyle:'circle',boxWidth:6,boxHeight:6,padding:14,font:{size:11}}};
+  const grid={color:'#eeeeee'};
+  const tick={font:{size:11},color:'#555'};
+  const pieOpts={maintainAspectRatio:false,layout:{padding:{top:4,bottom:0}},
+    plugins:{legend,tooltip:{callbacks:{label:c=>` ${c.label}: ${c.raw}%`}}}};
 
-new Chart(c2,{type:'bar',data:{labels:['Credit Card','Personal Loan','Mortgage','Savings','Term Deposit'],
- datasets:[{label:'Fee Income',data:[620,410,380,260,140],backgroundColor:CY},
-           {label:'Cards',data:[2900,0,0,0,0],backgroundColor:PK},
-           {label:'NII',data:[0,5200,8400,1900,4600],backgroundColor:YL}]},
- options:{maintainAspectRatio:false,plugins:{legend},
-  scales:{x:{stacked:true,grid,ticks:{maxRotation:45,minRotation:45}},y:{stacked:true,beginAtZero:true,grid,ticks:{callback:v=>v.toLocaleString()}}}}});
+  new Chart(c1,{type:'pie',data:{labels:['Term Deposits','Savings / Current','Mortgage Loan','Personal Loan','Credit Cards'],
+   datasets:[{data:[38,26,18,11,7],backgroundColor:[YL,CY,PK,PU,OR],borderWidth:0}]},options:pieOpts});
 
-new Chart(c3,{type:'bar',data:{labels:['Education','EMI','Entertainment','Food','Groceries','Travel','Utilities','Others'],
- datasets:[{data:[14,21,5,4,6,18,3,7],backgroundColor:[CY,PK,YL,BL,OR,PU,LY,PK],borderRadius:5,maxBarThickness:36}]},
- options:{maintainAspectRatio:false,plugins:{legend:{display:false}},
-  scales:{x:{grid:{display:false},ticks:{maxRotation:0,autoSkip:false,font:{size:11}}},y:{beginAtZero:true,max:25,ticks:{stepSize:5},grid,
-   title:{display:true,text:'Value in thousands (OMR)'}}}}});
+  new Chart(c2,{type:'bar',data:{labels:['Credit Card','Personal Loan','Mortgage','Savings','Term Deposit'],
+   datasets:[{label:'Fee Income',data:[620,410,380,260,140],backgroundColor:CY,maxBarThickness:48},
+             {label:'Cards',data:[2900,0,0,0,0],backgroundColor:PK,maxBarThickness:48},
+             {label:'NII',data:[0,5200,8400,1900,4600],backgroundColor:YL,maxBarThickness:48}]},
+   options:{maintainAspectRatio:false,layout:{padding:{left:4}},plugins:{legend},
+    scales:{x:{stacked:true,grid,ticks:{...tick,maxRotation:0,autoSkip:false}},
+            y:{stacked:true,beginAtZero:true,max:10000,grid,ticks:{...tick,stepSize:2000,callback:v=>v.toLocaleString()},
+               title:{display:true,text:'OMR',font:{size:11}}}}}});
 
-new Chart(c4,{type:'pie',data:{labels:['Bonds & Sukuk','Fixed Deposits','Mutual Funds','Equities','Gold','Insurance'],
- datasets:[{data:[24,22,18,12,10,14],backgroundColor:[PU,CY,PK,YL,BL,OR],borderWidth:0}]},
- options:{maintainAspectRatio:false,layout:{padding:10},plugins:{legend,tooltip:{callbacks:{label:c=>` ${c.label}: ${c.raw}%`}}}}});
+  new Chart(c3,{type:'bar',data:{labels:['Education','EMI','Entertain.','Food','Groceries','Travel','Utilities','Others'],
+   datasets:[{data:[14,21,5,4,6,18,3,7],backgroundColor:[CY,PK,YL,BL,OR,PU,LY,PK],borderRadius:4,maxBarThickness:28}]},
+   options:{maintainAspectRatio:false,layout:{padding:{left:4}},plugins:{legend:{display:false}},
+    scales:{x:{grid:{display:false},ticks:{...tick,maxRotation:0,autoSkip:false}},
+            y:{beginAtZero:true,max:25,grid,ticks:{...tick,stepSize:5},title:{display:true,text:'Value in thousands (OMR)',font:{size:11}}}}}});
 
-new Chart(c5,{type:'line',data:{labels:['Dec','Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov'],
- datasets:[{label:'Actual (OMR \'000)',data:[1062,1078,1091,1104,1119,1132,1150,1168,1189,1207,1226,1245],borderColor:CY,backgroundColor:CY,pointRadius:3,tension:.3},
-           {label:'Target (OMR \'000)',data:[1050,1070,1090,1110,1130,1150,1165,1180,1195,1210,1225,1240],borderColor:PK,backgroundColor:PK,pointRadius:3,tension:.3}]},
- options:{maintainAspectRatio:false,plugins:{legend},scales:{x:{grid},y:{min:1000,max:1300,ticks:{stepSize:50},grid}}}});
+  new Chart(c4,{type:'pie',data:{labels:['Bonds & Sukuk','Fixed Deposits','Mutual Funds','Equities','Gold','Insurance'],
+   datasets:[{data:[24,22,18,12,10,14],backgroundColor:[PU,CY,PK,YL,BL,OR],borderWidth:0}]},options:pieOpts});
+
+  new Chart(c5,{type:'line',data:{labels:['Dec','Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov'],
+   datasets:[{label:'Actual (OMR \'000)',data:[1062,1078,1091,1104,1119,1132,1150,1168,1189,1207,1226,1245],borderColor:CY,backgroundColor:CY,borderWidth:2,pointRadius:3,tension:.3},
+             {label:'Target (OMR \'000)',data:[1050,1070,1090,1110,1130,1150,1165,1180,1195,1210,1225,1240],borderColor:PK,backgroundColor:PK,borderWidth:2,pointRadius:3,tension:.3}]},
+   options:{maintainAspectRatio:false,layout:{padding:{left:4}},plugins:{legend},
+    scales:{x:{grid,ticks:tick},y:{min:1000,max:1300,grid,ticks:{...tick,stepSize:50,callback:v=>v.toLocaleString()}}}}});
+}
+
+// Render only after Poppins has loaded so canvas text uses the system font
+(document.fonts && document.fonts.load ? Promise.all([document.fonts.load("11px Poppins"),document.fonts.load("500 11px Poppins")]).then(()=>document.fonts.ready) : Promise.resolve())
+  .then(draw).catch(draw);
 </script>
 </body>
 </html>
