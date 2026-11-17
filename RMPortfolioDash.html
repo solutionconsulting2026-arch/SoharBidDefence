@@ -50,8 +50,6 @@
 <div class="grid">
   <div class="card"><h3>Balances by Product <small>OMR Million</small></h3><div class="inner"><canvas id="c1"></canvas></div></div>
   <div class="card"><h3>Customer Classification <small>400 customers</small></h3><div class="inner"><canvas id="c2"></canvas></div></div>
-  <div class="card"><h3>Portfolio Profitability Trend <small>OMR '000 per month</small></h3><div class="inner"><canvas id="c3"></canvas></div></div>
-  <div class="card"><h3>Revenue by Segment <small>YTD, OMR '000</small></h3><div class="inner"><canvas id="c4"></canvas></div></div>
 
 </div>
 
@@ -77,22 +75,6 @@ new Chart(c2,{type:'doughnut',data:{labels:['Platinum (> OMR 1M)','Gold (OMR 250
  plugins:[{id:'ctr',afterDraw(ch){const m=ch.getDatasetMeta(0).data[0];if(!m)return;const{ctx}=ch;ctx.save();ctx.textAlign='center';
   ctx.font='600 26px Poppins';ctx.fillStyle='#111';ctx.fillText('400',m.x,m.y+4);ctx.font='12px Poppins';ctx.fillStyle='#777';ctx.fillText('Customers',m.x,m.y+24);ctx.restore();}}]});
 
-// 3. Profitability trend
-new Chart(c3,{data:{labels:['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct'],
- datasets:[
-  {type:'bar',label:'Net Interest Income',data:[248,252,261,258,270,276,281,286,292,298],backgroundColor:CY,borderRadius:5,stack:'s'},
-  {type:'bar',label:'Fee Income',data:[62,58,71,66,74,69,77,80,76,84],backgroundColor:PK,borderRadius:5,stack:'s'},
-  {type:'line',label:'Monthly Target',data:[340,340,345,345,350,350,355,355,360,360],borderColor:YL,backgroundColor:YL,borderDash:[5,4],pointRadius:3,tension:.3}]},
- options:{maintainAspectRatio:false,plugins:{legend},
-  scales:{x:{stacked:true,grid:{display:false}},y:{stacked:true,beginAtZero:true,max:400,ticks:{stepSize:100},grid}}}});
-
-// 4. Revenue by segment
-new Chart(c4,{type:'bar',data:{labels:['Platinum','Gold','Silver','Emerging'],
- datasets:[{label:'Deposits',data:[612,698,402,96],backgroundColor:CY,borderRadius:5},
-           {label:'Loans',data:[388,512,341,118],backgroundColor:PK,borderRadius:5},
-           {label:'Investments',data:[146,74,28,6],backgroundColor:YL,borderRadius:5}]},
- options:{maintainAspectRatio:false,plugins:{legend},
-  scales:{x:{grid:{display:false}},y:{beginAtZero:true,grid}}}});
 </script>
 </body>
 </html>
