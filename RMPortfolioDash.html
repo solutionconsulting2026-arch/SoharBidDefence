@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>RM Premier Portfolio – Consolidated View</title>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+<style>
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{font-family:'Poppins',sans-serif;background:#fff;color:#1f1f1f;padding:24px}
+  .head{display:flex;justify-content:space-between;align-items:flex-end;margin-bottom:20px}
+  .head h2{font-size:20px;font-weight:600}
+  .head .sub{font-size:13px;color:#777;margin-top:2px}
+  .head .asof{font-size:12px;color:#777;border:1px solid #e6e6e6;border-radius:16px;padding:5px 12px}
+  .kpis{display:grid;grid-template-columns:repeat(6,1fr);gap:22px;margin-bottom:28px}
+  .kpi{border-radius:8px;padding:22px 12px;text-align:center;box-shadow:0 1px 3px rgba(0,0,0,.06)}
+  .kpi.pink{background:#f3e4e4}.kpi.blue{background:#e2f4f8}
+  .kpi h4{font-size:15px;font-weight:500;color:#111;margin-bottom:6px}
+  .kpi p{font-size:20px;font-weight:500;color:#333}
+  .kpi span{display:block;font-size:12px;margin-top:4px}
+  .up{color:#1f9d6b}.dn{color:#d6336c}
+  .grid{display:grid;grid-template-columns:1fr 1fr;gap:32px}
+  .card{border:1px solid #e9e9e9;padding:14px 12px 12px}
+  .card h3{color:#d6336c;font-size:17px;font-weight:600;padding-bottom:10px;border-bottom:1px solid #e3e3e3;margin-bottom:12px;display:flex;justify-content:space-between;align-items:center}
+  .card h3 small{font-size:12px;color:#888;font-weight:400}
+  .inner{border:1px solid #f0f0f0;border-radius:18px;padding:18px;height:360px;position:relative}
+  table{width:100%;border-collapse:collapse;font-size:13px}
+  th{background:#fbe9ef;text-align:left;padding:10px 12px;font-weight:600}
+  td{padding:10px 12px;border-bottom:1px solid #f0f0f0}
+  td.n{text-align:right}
+  .pill{font-size:11px;padding:3px 9px;border-radius:12px;white-space:nowrap}
+  .p-h{background:#fde2e8;color:#c2255c}.p-m{background:#fff1d6;color:#b26a00}.p-l{background:#e2f4f8;color:#1b7f93}
+  .full{grid-column:1 / -1}
+  .full .inner{height:auto}
+</style>
+</head>
+<body>
+
+
+<div class="kpis">
+  <div class="kpi pink"><h4>Premier Customers</h4><p>400</p><span class="up">▲ 12 net new YTD</span></div>
+  <div class="kpi blue"><h4>Total Relationship Value</h4><p>OMR 186.4 M</p><span class="up">▲ 8.2% YoY</span></div>
+  <div class="kpi pink"><h4>Deposits</h4><p>OMR 112.6 M</p><span class="up">▲ 6.5% YoY</span></div>
+  <div class="kpi blue"><h4>Loans Outstanding</h4><p>OMR 48.3 M</p><span class="up">▲ 11.4% YoY</span></div>
+  <div class="kpi pink"><h4>Investments (AUM)</h4><p>OMR 25.5 M</p><span class="up">▲ 9.1% YoY</span></div>
+  <div class="kpi blue"><h4>Net Revenue YTD</h4><p>OMR 3.42 M</p><span class="dn">87% of annual target</span></div>
+</div>
+
+<div class="grid">
+  <div class="card"><h3>Balances by Product <small>OMR Million</small></h3><div class="inner"><canvas id="c1"></canvas></div></div>
+  <div class="card"><h3>Customer Classification <small>400 customers</small></h3><div class="inner"><canvas id="c2"></canvas></div></div>
+  <div class="card"><h3>Portfolio Profitability Trend <small>OMR '000 per month</small></h3><div class="inner"><canvas id="c3"></canvas></div></div>
+  <div class="card"><h3>Revenue by Segment <small>YTD, OMR '000</small></h3><div class="inner"><canvas id="c4"></canvas></div></div>
+
+</div>
+
+<script>
+const CY='#88d6e2', PK='#d94a7b', YL='#fbb31c', BL='#4a4fd9', OR='#f7941d', GR='#3fbf8f';
+Chart.defaults.font.family='Poppins'; Chart.defaults.font.size=12; Chart.defaults.color='#333';
+const legend={position:'bottom',labels:{usePointStyle:true,pointStyle:'circle',boxWidth:8,padding:20}};
+const grid={color:'#e6e6e6'};
+
+// 1. Balances by product (horizontal bar)
+new Chart(c1,{type:'bar',data:{labels:['Current / Savings','Term Deposits','Mortgage Loans','Personal Loans','Credit Cards','Mutual Funds','Bonds & Sukuk'],
+ datasets:[{data:[46.2,66.4,31.5,13.9,2.9,15.8,9.7],backgroundColor:[CY,CY,PK,PK,PK,YL,YL],borderRadius:6,maxBarThickness:26}]},
+ options:{indexAxis:'y',maintainAspectRatio:false,plugins:{legend:{display:false},tooltip:{callbacks:{label:c=>` OMR ${c.raw} M`}}},
+  scales:{x:{grid,beginAtZero:true},y:{grid:{display:false}}}},
+ plugins:[{id:'lg',afterDraw(ch){const{ctx,chartArea:a}=ch;const items=[[CY,'Deposits'],[PK,'Loans'],[YL,'Investments']];
+  ctx.save();ctx.font='12px Poppins';let x=a.right-260;items.forEach(([c,t])=>{ctx.fillStyle=c;ctx.beginPath();ctx.arc(x,a.bottom-12,4,0,7);ctx.fill();ctx.fillStyle='#333';ctx.fillText(t,x+9,a.bottom-8);x+=90;});ctx.restore();}}]});
+
+// 2. Customer classification (doughnut)
+new Chart(c2,{type:'doughnut',data:{labels:['Platinum (> OMR 1M)','Gold (OMR 250K–1M)','Silver (OMR 100–250K)','Emerging (< OMR 100K)'],
+ datasets:[{data:[48,112,164,76],backgroundColor:[BL,YL,CY,PK],borderWidth:0}]},
+ options:{maintainAspectRatio:false,cutout:'58%',plugins:{legend:{...legend,position:'right'},
+  tooltip:{callbacks:{label:c=>` ${c.label}: ${c.raw} customers`}}}},
+ plugins:[{id:'ctr',afterDraw(ch){const m=ch.getDatasetMeta(0).data[0];if(!m)return;const{ctx}=ch;ctx.save();ctx.textAlign='center';
+  ctx.font='600 26px Poppins';ctx.fillStyle='#111';ctx.fillText('400',m.x,m.y+4);ctx.font='12px Poppins';ctx.fillStyle='#777';ctx.fillText('Customers',m.x,m.y+24);ctx.restore();}}]});
+
+// 3. Profitability trend
+new Chart(c3,{data:{labels:['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct'],
+ datasets:[
+  {type:'bar',label:'Net Interest Income',data:[248,252,261,258,270,276,281,286,292,298],backgroundColor:CY,borderRadius:5,stack:'s'},
+  {type:'bar',label:'Fee Income',data:[62,58,71,66,74,69,77,80,76,84],backgroundColor:PK,borderRadius:5,stack:'s'},
+  {type:'line',label:'Monthly Target',data:[340,340,345,345,350,350,355,355,360,360],borderColor:YL,backgroundColor:YL,borderDash:[5,4],pointRadius:3,tension:.3}]},
+ options:{maintainAspectRatio:false,plugins:{legend},
+  scales:{x:{stacked:true,grid:{display:false}},y:{stacked:true,beginAtZero:true,max:400,ticks:{stepSize:100},grid}}}});
+
+// 4. Revenue by segment
+new Chart(c4,{type:'bar',data:{labels:['Platinum','Gold','Silver','Emerging'],
+ datasets:[{label:'Deposits',data:[612,698,402,96],backgroundColor:CY,borderRadius:5},
+           {label:'Loans',data:[388,512,341,118],backgroundColor:PK,borderRadius:5},
+           {label:'Investments',data:[146,74,28,6],backgroundColor:YL,borderRadius:5}]},
+ options:{maintainAspectRatio:false,plugins:{legend},
+  scales:{x:{grid:{display:false}},y:{beginAtZero:true,grid}}}});
+</script>
+</body>
+</html>
